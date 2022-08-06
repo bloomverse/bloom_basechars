@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16044954476d98d428e46f52a2c99ea2, type: 3}
+  m_Name: SLOWEffect
+  m_EditorClassIdentifier: 
+  Name: Slow
+  DOTAmount: 0
+  MovementPenalty: 0
+  Lifetime: 10
+  TickSpeed: 0.5
+  EffectParticles: {fileID: 3523459357089972135, guid: 5d6b4dd6c8c4a9b42a1ce505122c58ec, type: 3}
