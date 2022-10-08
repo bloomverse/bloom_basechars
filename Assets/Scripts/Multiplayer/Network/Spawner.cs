@@ -4,6 +4,7 @@ using UnityEngine;
 using Fusion;
 using Fusion.Sockets;
 using System;
+using Random=UnityEngine.Random;
 
 public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 {
@@ -11,6 +12,7 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
 
     //Other compoents
     CharacterInputHandler characterInputHandler;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -21,9 +23,13 @@ public class Spawner : MonoBehaviour, INetworkRunnerCallbacks
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         if (runner.IsServer)
-        {
-            Debug.Log("OnPlayerJoined we are server. Spawning player");
-            runner.Spawn(playerPrefab, Utils.GetRandomSpawnPoint(), Quaternion.identity, player);
+        {   
+            Vector3
+             spawnp = ArenaManager.instance.spawnPoints[Random.Range(0,ArenaManager.instance.spawnPoints.Length-1)].position;
+            Debug.Log("OnPlayerJoined we are server. Spawning player" + spawnp);
+
+            runner.Spawn(playerPrefab, spawnp , Quaternion.identity, player);
+            //Utils.GetRandomSpawnPoint()
         }
         else Debug.Log("OnPlayerJoined");
     }

@@ -29,6 +29,7 @@ using UnityEngine.InputSystem;
     	private InputAction spellAction3;
     	private InputAction spellAction4;
 		private InputAction spellAction5;
+		private InputAction jumpAction;
 
 		
 
@@ -61,6 +62,7 @@ using UnityEngine.InputSystem;
 			spellAction3 = playerInput.actions["CastSpell3"];
 			spellAction4 = playerInput.actions["CastSpell4"];
 			spellAction5 = playerInput.actions["CastSpell5"];
+			jumpAction = playerInput.actions["Jump"];
 			inventory = playerInput.actions["Inventory"];
 		}
 		private void OnEnable(){
@@ -82,6 +84,9 @@ using UnityEngine.InputSystem;
 
 		spellAction5.performed += _ => castSpell5();
         spellAction5.canceled += _ => stopCast5();
+
+		jumpAction.performed += _ => {jump=true; };
+        jumpAction.canceled += _ => {jump=false; };
 
 
 		inventory.performed += _ => toogleInventory();
@@ -166,7 +171,8 @@ using UnityEngine.InputSystem;
 
 		public void OnJump(InputValue value)
 		{
-			JumpInput(value.isPressed);
+			//Debug.Log(value.isPressed + "isPressed");
+			//JumpInput(value.isPressed);
 		}
 
 		public void OnSprint(InputValue value)

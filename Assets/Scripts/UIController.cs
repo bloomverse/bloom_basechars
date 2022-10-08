@@ -7,17 +7,18 @@ public class UIController : MonoBehaviour
 {
     
     public Label bloomies;
-
+    public static UIController instance;
 
     void Start()
     {
+        instance = this;
         var root = GetComponent<UIDocument>().rootVisualElement;
         bloomies = root.Q<Label>("bloomies");
 
-        var Host_bt =GetComponent<UIDocument>().rootVisualElement.Q<Button>("Host");
-        var Client_bt =GetComponent<UIDocument>().rootVisualElement.Q<Button>("Client");
+      //  var Host_bt =GetComponent<UIDocument>().rootVisualElement.Q<Button>("Host");
+      //  var Client_bt =GetComponent<UIDocument>().rootVisualElement.Q<Button>("Client");
 
-        Host_bt.clicked += () =>
+      /*  Host_bt.clicked += () =>
         {
             Debug.Log("Host Click");
             //NetworkHandler.instance.StartHostMode();
@@ -28,14 +29,19 @@ public class UIController : MonoBehaviour
         {
             //NetworkHandler.instance.StartClientMode();
             Debug.Log("Client Click");
-        };
+        };*/
 
 
     }
 
+    public void setRocketGasolineValue(float value){
+        var root = GetComponent<UIDocument>().rootVisualElement;
+        root.Q<AbstractProgressBar>("rocketgasoline").value = value;
+    }   
+
     // Update is called once per frame
     void Update()
     {
-        bloomies.text = "";
+        //bloomies.text = "";
     }
 }

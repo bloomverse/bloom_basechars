@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-
+using Fusion;
 
 [RequireComponent(typeof(Animator))]
 public class Gun : MonoBehaviour
@@ -28,6 +28,7 @@ public class Gun : MonoBehaviour
     private Animator Animator;
     private float LastShootTime;
 
+    //public RaycastHit target { get; set; }
     public RaycastHit target { get; set; }
     public bool hit { get; set;}
 

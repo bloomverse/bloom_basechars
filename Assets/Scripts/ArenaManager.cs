@@ -21,6 +21,9 @@ public class ArenaManager : MonoBehaviour
     public AudioSource source;
 
 
+    public Transform[] spawnPoints;
+
+
     new Renderer renderer;
     public Material material;
 

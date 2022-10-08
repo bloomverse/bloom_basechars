@@ -7,11 +7,17 @@ public class CharacterInputHandler : MonoBehaviour
     Vector2 moveInputVector = Vector2.zero;
     Vector2 viewInputVector = Vector2.zero;
     bool isJumpButtonPressed = false;
+    bool isFireButtonPressed = false;
+
+    private StarterAssetsInputs _input;
 
     //Other components
+    LocalCameraHandler localCameraHandler;
     CharacterMovementHandler characterMovementHandler;
+
     private void Awake()
     {
+        localCameraHandler = GetComponentInChildren<LocalCameraHandler>();
         characterMovementHandler = GetComponent<CharacterMovementHandler>();
     }
 
@@ -20,27 +26,43 @@ public class CharacterInputHandler : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        _input = GetComponent<StarterAssetsInputs>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //View input
-        viewInputVector.x = Input.GetAxis("Mouse X");
-        viewInputVector.y = Input.GetAxis("Mouse Y") * -1; //Invert the mouse look
+        if(!characterMovementHandler.Object.HasInputAuthority)
+        return;
 
-        characterMovementHandler.SetViewInputVector(viewInputVector);
+         //View input
+        viewInputVector.x = _input.look.x; //Input.GetAxis("Mouse X");
+        viewInputVector.y = _input.look.y * -1; //Input.GetAxis("Mouse Y") * -1; //Invert the mouse look
 
         //Move input
-        moveInputVector.x = Input.GetAxis("Horizontal");
-        moveInputVector.y = Input.GetAxis("Vertical");
+        moveInputVector.x = _input.move.x; // Input.GetAxis("Horizontal");
+        moveInputVector.y = _input.move.y; //Input.GetAxis("Vertical");
 
-        isJumpButtonPressed = Input.GetButtonDown("Jump");
+//        Debug.Log(moveInputVector.x + " reaccion x " + moveInputVector.y);
+
+        //Debug.Log(_input.jump + "jump");
+        isJumpButtonPressed = _input.jump; //Input.GetButtonDown("Jump");
+        isFireButtonPressed = _input.leftStatus;
+
+        localCameraHandler.SetViewInputVector(viewInputVector);
+
+
     }
 
     public NetworkInputData GetNetworkInput()
     {
         NetworkInputData networkInputData = new NetworkInputData();
+
+        //Aim data
+        networkInputData.aimForwardVector = localCameraHandler.transform.forward;
+
+        networkInputData.cameraTransform = localCameraHandler.transform.position;
 
         //View data
         networkInputData.rotationInput = viewInputVector.x;
@@ -50,6 +72,12 @@ public class CharacterInputHandler : MonoBehaviour
 
         //Jump data
         networkInputData.isJumpPressed = isJumpButtonPressed;
+
+        //Fire data
+        networkInputData.isFireButtonPressed = isFireButtonPressed;
+
+         isJumpButtonPressed = false;
+        isFireButtonPressed = false;
 
         return networkInputData;
     }
